@@ -22,6 +22,8 @@ git add .
 git commit -m "Initial project"
 ```
 
+Make sure we use 
+
 Add `:electric` as a dependency.
 ```
 {:electric, github: "electric-sql/electric", sparse: "components/electric", branch: "main"},
@@ -130,45 +132,4 @@ Fails on ecto.create because it's trying to connect to the proxy repo that hasn'
 This confirms that this isn't supposed to run in the same BEAM.  It must be a separate BEAM running, so that this one can rely on the other as it's postgres connection.
 
 There may also be some issues with env vars not being picked up by dotenvy in mix tasks.  Need to confirm.
-
-Re-orged so the repo has 2 top level dirs now, one is the Phoenix app and one is the electric Git repo as a submodule.
-
-```
-cp hello_electric/.env.dev electric/components/electric/.env.dev
-cd electric/components/electric
-mix deps.get
-iex -S mix
-```
-
-That fails because the db hasn't been created yet.  Can't create the db with ecto.create though because the proxy isn't running yet.
-Create it manually.
-
-```
-createdb hello_electric_dev
-```
-
-Now start it.
-```
-iex -S mix
-```
-Worked this time!
-
-Now back to hello_electric to try to run the migrations.  First delete the Electric config from runtime.exs, since it's not needed here.
-
-
-```
-$ mix ecto.migrate
-Compiling 11 files (.ex)
-Generated hello_electric app
-** (UndefinedFunctionError) function Electric.Config.validate_auth_config/2 is undefined (module Electric.Config is not available)
-    Electric.Config.validate_auth_config("insecure", [alg: {"AUTH_JWT_ALG", nil}, key: {"AUTH_JWT_KEY", nil}, namespace: {"AUTH_JWT_NAMESPACE", nil}, iss: {"AUTH_JWT_ISS", nil}, aud: {"AUTH_JWT_AUD", nil}])
-    /Users/justin/Code/hello_electric/hello_electric/config/runtime.exs:239: (file)
-    (stdlib 4.3.1.3) erl_eval.erl:748: :erl_eval.do_apply/7
-    (stdlib 4.3.1.3) erl_eval.erl:492: :erl_eval.expr/6
-    (stdlib 4.3.1.3) erl_eval.erl:136: :erl_eval.exprs/6
-```
-
-I don't think those env vars should be needed.  So I'm guessing dotenvy is not doing it's thing for mix tasks.
-
-
 
