@@ -187,4 +187,4 @@ drop subscription postgres_1;
 \q
 ```
 
-Doesn't always work.  Sometimes have to transfer ownership of everything to a different user first.
+Doesn't always work.  Sometimes have to transfer ownership of everything to a different user first, but even then, can't drop with the mix tasks, since mix has been configured to always use this proxy, and I can't use the proxy if it's down so the connection is removed, plus subscriptions dropped.
