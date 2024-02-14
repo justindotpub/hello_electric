@@ -1,18 +1,35 @@
 # HelloElectric
 
-To start your Phoenix server:
+## Pre-reqs
 
-  * Run `mix setup` to install and setup dependencies
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+Their [pre-reqs](https://github.com/electric-sql/electric/tree/main/components/electric#pre-reqs) section currently lists Elixir 1.15 and Erlang/OTP 25, but their [.tool-versions](https://github.com/electric-sql/electric/blob/main/.tool-versions) is different, so I'm going with that.
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+```
+cat <<EOF > .tool-versions
+elixir 1.16.1-otp-25
+erlang 25.3.2.8
+EOF
+asdf install
+```
+## Create Phoenix project
+```
+mix archive.install hex phx_new
+mix phx.new hello_electric --no-live --no-tailwind --no-html
+cd hello_electric
+cp ../.tool-versions .
+git init
+git add .
+git commit -m "Initial project"
+```
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+Make sure we use 
 
-## Learn more
+Add `:electric` as a dependency.
+```
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+```
+
+Run `mix setup`.
+```
+
+```
