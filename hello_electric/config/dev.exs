@@ -12,7 +12,7 @@ config :hello_electric, HelloElectric.Repo,
 
 config :hello_electric, HelloElectric.ProxyRepo,
   ssl: false,
-  url: "postgres://postgres:proxy-password@localhost:65432/hello_electric_dev",
+  url: "postgres://postgres:proxy_password@localhost:65432/hello_electric_dev",
   # we only use this repo for migrations
   pool_size: 2,
   # when we run `mix ecto.gen.migration ...` we want the generated migration file
