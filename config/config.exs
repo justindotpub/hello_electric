@@ -8,7 +8,7 @@
 import Config
 
 config :hello_electric,
-  ecto_repos: [HelloElectric.Repo],
+  ecto_repos: [HelloElectric.ProxyRepo],
   generators: [timestamp_type: :utc_datetime]
 
 # Configures the endpoint

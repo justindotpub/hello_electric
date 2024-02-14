@@ -10,6 +10,16 @@ config :hello_electric, HelloElectric.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
+config :hello_electric, HelloElectric.ProxyRepo,
+  ssl: false,
+  url: "postgres://postgres:proxy-password@localhost:65432/hello_electric_dev",
+  # we only use this repo for migrations
+  pool_size: 2,
+  # when we run `mix ecto.gen.migration ...` we want the generated migration file
+  # to belong to the "real" `MyApp.Repo` this will also mean that any existing
+  # migrations will be recognized automatically.
+  priv: "priv/repo"
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #

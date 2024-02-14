@@ -37,6 +37,18 @@ if config_env() == :prod do
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
     socket_options: maybe_ipv6
 
+  # because we need to apply migrations in production, ensure that
+  # the ProxyRepo is included in the runtime.exs configuration.
+  #
+  # The `PROXY_URL` environment variable is part of your deployment configuration
+  # that tells you application how to connect to the Electric proxy.
+  # e.g. `postgres://postgres:proxy-password@localhost:65432/myapp`
+  config :hello_electric, HelloElectric.ProxyRepo,
+    ssl: false,
+    url: System.get_env("PROXY_URL"),
+    pool_size: 2,
+    priv: "priv/repo"
+
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you
   # want to use a different value for prod and you most likely don't want
