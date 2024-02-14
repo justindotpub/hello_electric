@@ -168,7 +168,23 @@ Generated hello_electric app
     (stdlib 4.3.1.3) erl_eval.erl:136: :erl_eval.exprs/6
 ```
 
-I don't think those env vars should be needed.  So I'm guessing dotenvy is not doing it's thing for mix tasks.
+I didn't have Electric's functions anymore, so can't have them in runtime.exs.  Pulled all that runtime config out of my app.
 
 
+Now it seems to be working.
 
+Other issues.
+I can't run ecto.drop anymore.  I can stop the sync service first and still can't drop.
+Have to do something like this.
+
+```
+psql -U postgres
+\c hello_electric_dev;
+select * from pg_subscription;
+alter subscription postgres_1 disable;
+alter subscription postgres_1 set (slot_name = none);
+drop subscription postgres_1;
+\q
+```
+
+Doesn't always work.  Sometimes have to transfer ownership of everything to a different user first.
